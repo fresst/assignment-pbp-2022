@@ -1,0 +1,134 @@
+[
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 1,
+        "fields": {
+            "watched": true,
+            "title" : "Perfect Blue",
+            "rating" : 4.65,
+            "release_date": "1997-02-28",
+            "review": "a good or pretty decent psychological thriller that even to this day is somewhat scarily accurate if you ever hear some of the horror stories that revolve around the behind the scenes of the J-pop and K-pop music industry or even the shady stuff in Hollywood. One of Satoshi Kon’s best works the animation still holds up in the test of time and is very fluid"
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 2,
+        "fields": {
+            "watched": false,
+            "title" : "Princess Mononoke",
+            "rating" : 4.1,
+            "release_date": "1997-07-12",
+            "review": "..."
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 3,
+        "fields": {
+            "watched": true,
+            "title" : "Mean Girls",
+            "rating" : 4.65,
+            "release_date": "2004-04-30",
+            "review": "Still my favorite movie to this day I remember when Mean Girls was a thing on Episode I would constantly play it and To be honest, I didn’t know Mean Girls was a movie, but then I realized that most of the stories on Episode were based on Movies."
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 4,
+        "fields": {
+            "watched": true,
+            "title" : "White Chicks",
+            "rating" : 4.1,
+            "release_date": "2004-06-23",
+            "review": "Can't remember how many times I've watched this film but it always make me laugh... endlessly!"
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 5,
+        "fields": {
+            "watched": true,
+            "title" : "Your Name",
+            "rating" : 3.9,
+            "release_date": "2016-12-07",
+            "review": "I had an absolute blast watching this flick. Now obviously, There ARE better anime flicks out there."
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 6,
+        "fields": {
+            "watched": false,
+            "title" : "Top Gun",
+            "rating" : 4.2,
+            "release_date": "1986-05-16",
+            "review": "..."
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 7,
+        "fields": {
+            "watched": true,
+            "title" : "Elvis",
+            "rating" : 3.75,
+            "release_date": "2022-06-24",
+            "review": "As someone who followed his career and its different stages very closely growing up, i was floored by Austin Butler's stunning performance before saying anything else about the movie."
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 8,
+        "fields": {
+            "watched": true,
+            "title" : "Parasite",
+            "rating" : 4.8,
+            "release_date": "2019-06-21",
+            "review": "Definitely a MUST WATCH film from 2019, this Palme d'Or winner of Cannes Film Festival sure does not disappoint with it's hard hitting themes and exceptionally crafted story."
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 9,
+        "fields": {
+            "watched": true,
+            "title" : "Spider-Man: No Way Home",
+            "rating" : 4.00,
+            "release_date": "2021-12-05",
+            "review": "Packed with action, emotion, and surprises, Spider-Man No Way Home is franchise fan service at it's finest…"
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 10,
+        "fields": {
+            "watched": false,
+            "title" : "Knives Out",
+            "rating" : 4.05,
+            "release_date": "2019-09-07",
+            "review": "This surprising delightful film has high marks in all the production core values. Writer/Director Rian Johnson gives a glitche free stately mystery with peacock flourish"
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 11,
+        "fields": {
+            "watched": true,
+            "title" : "Fight Club",
+            "rating" : 4.4,
+            "release_date": "1999-11-11",
+            "review": "I think it's great. The script writing, even though is not exactly parallel to the novel, still conveys the same writing style that Chuck wrote in, that being a very poetic and a peculiarly descriptive way."
+        } 
+    },
+    {
+        "model":"mywatchlist.mywatchlist",
+        "pk": 12,
+        "fields": {
+            "watched": true,
+            "title" : "As Above So Below",
+            "rating" : 3.15,
+            "release_date": "2014-08-20",
+            "review": "Besides bad character development, I also didn’t like how it had fantasy elements or magic elements implemented into the movie."
+        } 
+    }
+]

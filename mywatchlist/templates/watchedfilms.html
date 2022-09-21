@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+
+  <h1>Assignment 3 PBP/PBD</h1>
+
+  <h2>Hi, {{nama}}!</h2>
+  <h2>{{status}}</h2>
+
+  <table>
+      <tr>
+        <th>Your Watchlist</th>
+        <th>Watched</th>
+      </tr>
+      {% comment %} Add the data below this line {% endcomment %}
+      {% for film in films %}
+        <tr>
+          <td>{{ film.title }}</td>
+          <td>{% if film.watched %} &#9989; 
+              {% else %} &#10060; {% endif %} 
+          </td>
+      {%endfor%}
+  </table>
+
+ {% endblock content %}
