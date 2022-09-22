@@ -42,11 +42,11 @@
      dan `review` menerima teks yang ukurannya lebih panjang daripada `title`.
 
 ## Tangkapan Layar Postman
-link ../mywatchlist/html:
+##### Link ../mywatchlist/html:
 ![postman-html](https://user-images.githubusercontent.com/89509266/191427802-b469f175-836d-4254-a583-3b00e1362584.jpg)<br>
 
-link ../mywatchlist/xml:
+##### Link ../mywatchlist/xml:
 ![postman-xml](https://user-images.githubusercontent.com/89509266/191428141-17aae277-dd33-48d9-a0d1-6e0cf7cf4d79.jpg)<br>
 
-link ../mywatchlist/json:
+##### Link ../mywatchlist/json:
 ![postman-json](https://user-images.githubusercontent.com/89509266/191428219-c7e59a0f-a56f-4450-8b80-f16290cb0eed.jpg)<br>
