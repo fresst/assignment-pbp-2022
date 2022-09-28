@@ -39,7 +39,7 @@ def user_login(req):
 
 def user_logout(req):
     logout(req)
-    response = HttpResponseRedirect(reverse('todolist:login'))
+    response = HttpResponseRedirect(reverse('todolist:user_login'))
     response.delete_cookie('login_cookie')
     return response
 
