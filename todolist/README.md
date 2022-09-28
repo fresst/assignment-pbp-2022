@@ -47,13 +47,19 @@
          date = models.DateField()
          title = models.CharField(max_length=255)
          description = models.TextField()
-    
-         def __str__(self):
-             return self.title
-
+   
      class CreateTaskForm(forms.ModelForm):
         class Meta:
             model = Task
             fields = ('title', 'description')
             widgets = {'description' : forms.Textarea()}
      ```
+   - Untuk mengimplementasikan form registrasi, dibuat fungsi `user_register` di `./todolist/views.py` yang akan menghasilkan object *user*.
+     Form yang digunakan adalah `UserCreationForm`, yang sudah tersedia di library Django. Implementasi fungsi `register` akan disimpan di target html `register.html`.
+   - Untuk mengimplementasikan login, dibuat fungsi `user_login` di `./todolist/views.py`. *Credentials* user, seperti username dan password, akan diambil menggunakan method `request.POST.get(...)` dan dicocokkan dengan *database* user menggunakan fungsi `autheticate`. 
+     Setiap user login, web akan menyimpan *cookie* login. Implementasi login ini akan disimpan di target HTML `login.html`.
+   - Untuk mengimplementasikan logout, dibuat fungsi `user_login` di `./todolist/views.py`. Fungsi `logout` akan menerima parameter `request`. Setiap user logout, 
+     *cookie* yang disimpan saat user login akan dihapus.  Implementasi logout ini akan disimpan di target HTML `logout.html`.
+   - Untuk mengimplementasikan create-task, dibuat fungsi `create_task` di `./todolist/views.py`. Fungsi ini akan membuat *instance* dari CreateTaskForm dan meminta `title` serta `description` dari *task* yang akan dibuat.
+     Kemudian, akan dibuat object Task baru dari data yang diisi di form tadi. Implementasi create_task ini akan disimpan di target HTML `create-task.html`.
+   - Akan dibuat *routing* untuk keempat *page* di atas dengan menambahkan URL di `url_patterns` pada `./todolist/urls.py`
