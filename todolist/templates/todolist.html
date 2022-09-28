@@ -14,7 +14,10 @@
       <tr>
         <th>Title</th>
         <th>Date</th>
-        <th>Descriptiom</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
       </tr>
       {% comment %} Add the data below this line {% endcomment %}
       {% for task in tasks %}
@@ -22,6 +25,19 @@
           <td>{{task.title}}</td>
           <td>{{task.date}}</td>
           <td>{{task.description}}</td>
+          <td>{% if task.is_finished %} Selesai 
+              {% else %} Belum selesai {% endif %} </td>
+          <td>
+            <button><a href="{% url 'todolist:change_status' task.id %}">
+              {% if task.is_finished %} Tandai Belum Selesai 
+              {% else %} Tandai Selesai {% endif %}
+            </a></button>
+          </td>
+          <td> 
+            <button><a href="{% url 'todolist:delete_task' task.id %}">
+              delete task
+            </a></button>
+          </td>
         </tr>
       {% endfor %}
   </table>

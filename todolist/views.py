@@ -70,3 +70,13 @@ def create_task(req):
             return redirect('todolist:show_todolist')
     context = {'form' : form}
     return render(req, 'create-task.html', context)
+
+def change_status(req, id):
+    this_task = Task.objects.get(id=id)
+    this_task.change_status()
+    return redirect('todolist:show_todolist')
+
+def delete_task(req, id):
+    this_task = Task.objects.get(id=id)
+    this_task.delete()
+    return redirect('todolist:show_todolist')
