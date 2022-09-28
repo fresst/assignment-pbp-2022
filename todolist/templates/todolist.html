@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+
+  <h1>Welcome back, {{user}}! </h1>
+  
+  {% comment %} Logout button {% endcomment %}
+  <button><a href="{% url 'todolist:user_logout' %}">Logout</a></button>
+
+  {% comment %} create task {% endcomment %}
+  <button><a href="{% url 'todolist:create_task' %}">Tambah Task Baru</a></button>
+
+  <table>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Descriptiom</th>
+      </tr>
+      {% comment %} Add the data below this line {% endcomment %}
+      {% for task in tasks %}
+        <tr>
+          <td>{{task.title}}</td>
+          <td>{{task.date}}</td>
+          <td>{{task.description}}</td>
+        </tr>
+      {% endfor %}
+  </table>
+
+  <h5>Sesi terakhir login: {{ last_login }}</h5>
+ {% endblock content %}
