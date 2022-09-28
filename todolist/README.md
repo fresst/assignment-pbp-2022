@@ -28,7 +28,12 @@
    - Untuk merapikan tampilan, kita dapat menggunakan *tag* HTML `<div></div>` dan `<label></label>`
      untuk membungkus atribut-atribut yang ada di `form` tadi.
 
-3. 
+3. - User menginput data melalui HTML page (`./todolist/create-task`)
+   - Melalui fungsi `create_task` di `views.py`, form membuat object `Task` baru.
+   - Laman `./todolist` akan menampilkan tabel yang berisi task **khusus milik user tersebut**. Hal ini dilakukan 
+     dengan mem-filter kumpulan object Task yang ada dengan `Task.objects.filter(user=req.user)` dan disimpan ke suatu variabel (untuk kasus saya `task`).
+   - Variabel `task` tadi ditambahkan ke variabel `context` dengan key sebagai berikut `'tasks' : task` 
+   - Key `'tasks'` yang menyimpan kumpulan task milik user akan diiterasi untuk ditampilkan di tabel pada file `todolist.html` (laman `./todolist`)
 
 4. - Dibuat aplikasi baru `todolist` dengan menjalankan *command* `python manage.py startapp todolist`. 
      Kemudian, aplikasi `todolist` didaftarkan ke dalam variabel `INSTALLED_APPS` di `./project_django/settings.py`
