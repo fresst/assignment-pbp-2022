@@ -1,46 +1,117 @@
 {% extends 'base.html' %}
 
- {% block content %}
+{% block content %}
+  <style>
+    a:link {
+      text-decoration: none;
+    }
+    a:visited {
+        text-decoration: none;
+    }
+    .footer{
+      position: static;
+      bottom: 0;
+      width: 100%;
+      height: 60px;
+      text-align: center;
+    }
+    .top-element{
+      margin-top: 60px;
+      text-align: center;
+    }
+    .navbar{
+      height: 60px;
+    }
+    .user-dropdown{
+      position: fixed;
+      right: 0;
+      margin: 10px;
+    }
+    .column {
+      float: left;
+      width: 25%;
+      padding: 0 5px;
+      margin-bottom: 20px;
+    }
+    .row {
+      margin: 10px;
+    }
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    .card:hover{
+      transform: scale(1.05);
+    }
+    @media screen and (max-width: 600px) {
+      .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+      }
+    }
+  </style>
 
-  <h1>Welcome back, {{user}}! </h1>
+  <nav class="navbar bg-light fixed-top">
+    <div class="user-dropdown">
+      <h3 class="dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-flower2"></i>
+      </h3>
+
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+        <li><span class="dropdown-item-text bi bi-flower2"> {{user}}
+        </span></li>
+        <li><a class="dropdown-item disabled" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="{% url 'todolist:user_logout' %}">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
   
-  {% comment %} Logout button {% endcomment %}
-  <button><a href="{% url 'todolist:user_logout' %}">Logout</a></button>
+  <div class="top-element">
+    <h1>Welcome back, {{user}}! </h1>
+  </div>
 
   {% comment %} create task {% endcomment %}
-  <button><a href="{% url 'todolist:create_task' %}">Tambah Task Baru</a></button>
+  <a class="btn" href="{% url 'todolist:create_task' %}" style="right:0;">
+    <h4 class="bi bi-plus-square">
+      Create a New Task
+    </h4>
+  </a>
+  
+  {% comment %} Add the data below this line {% endcomment %}
+  <div class="row">
+    {% for task in tasks %}
+    <div class="column">
+      <div class="card bg-light mb-3" style="max-width: 20rem;">
+        <div class="card-header">
+          {% if task.is_finished %} Selesai 
+          {% else %} Belum selesai {% endif %}
+        </div>
 
-  <table>
-      <tr>
-        <th>Title</th>
-        <th>Date</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th></th>
-        <th></th>
-      </tr>
-      {% comment %} Add the data below this line {% endcomment %}
-      {% for task in tasks %}
-        <tr>
-          <td>{{task.title}}</td>
-          <td>{{task.date}}</td>
-          <td>{{task.description}}</td>
-          <td>{% if task.is_finished %} Selesai 
-              {% else %} Belum selesai {% endif %} </td>
-          <td>
-            <button><a href="{% url 'todolist:change_status' task.id %}">
-              {% if task.is_finished %} Tandai Belum Selesai 
-              {% else %} Tandai Selesai {% endif %}
-            </a></button>
-          </td>
-          <td> 
-            <button><a href="{% url 'todolist:delete_task' task.id %}">
-              delete task
-            </a></button>
-          </td>
-        </tr>
-      {% endfor %}
-  </table>
+        <div class="card-body">
+          <h5 class="card-title" style="text-align: center">{{task.title}}</h5>
+          <p class="card-text" style="text-align: center">{{task.description}}</p>
+          
+          <a class="btn" href="{% url 'todolist:change_status' task.id %}">
+            {% if task.is_finished %} 
+              <i class="bi bi-check-square-fill"></i> 
+            {% else %} <i class="bi bi-dash-square"></i> {% endif %}
+          </a>
 
-  <h5>Sesi terakhir login: {{ last_login }}</h5>
- {% endblock content %}
+          <a class="btn" href="{% url 'todolist:delete_task' task.id %}">
+            <i class="bi bi-trash-fill"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock content %}
+
+{% block footer%}
+  <div class="footer">
+    <small>Sesi terakhir login: {{ last_login }}</small>
+  </div>
+{%endblock footer%}

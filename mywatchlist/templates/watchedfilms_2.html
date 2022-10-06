@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+ {% block content %}
+
+<h1>Assignment 3 PBP/PBD</h1>
+
+<h2>Hi, {{nama}}!</h2>
+<h2>{{status}}</h2>
+
+<section>
+  <header style=" display: flex; flex-wrap: wrap">
+    <div style="flex: 1 1 auto;">Column A</div>
+    <div style="flex: 1 1 auto;">Column B</div>
+    <div style="flex: 1 1 auto;">Column C</div>
+  </header>
+  <div style="flex-basis: 100%; width: 0px; height: 0px; overflow: hidden"></div>
+  <div style=" display: flex; flex-wrap: wrap">
+    <div style="flex: 1 1 auto;">1</div>
+    <div style="flex: 1 1 auto;">2</div>
+    <div style="flex: 1 1 auto;">3</div>
+  </div>
+</section>
+
+{% endblock content %}

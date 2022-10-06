@@ -68,7 +68,10 @@ def create_task(req):
             new_task.save()
             # messages.success(req, 'Task baru berhasil dibuat!')
             return redirect('todolist:show_todolist')
-    context = {'form' : form}
+    context = {
+        'form' : form,
+        'last_login' : req.COOKIES['login_cookie']
+    }
     return render(req, 'create-task.html', context)
 
 def change_status(req, id):

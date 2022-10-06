@@ -2,6 +2,7 @@
 [https://assignment-pbp-2022.herokuapp.com/todolist/](http://assignment-pbp-2022.herokuapp.com/todolist/)<br>
 
 ## Jawaban Pertanyaan
+### Tugas 4
 1. Kegunaan `{% csrf_token %}` pada elemen `<form>` adalah untuk menjaga user dari serangan **Cross-site Request Forgery**,
    yaitu ketika *attacker* menggunakan *authenticated state* user untuk mengubah *request* user.
    `{% csrf_token %}` akan men-*generate* token pada bagian server saat *rendering page* HTML. 
@@ -68,3 +69,25 @@
    - Untuk mengimplementasikan create-task, dibuat fungsi `create_task` di `./todolist/views.py`. Fungsi ini akan membuat *instance* dari CreateTaskForm dan meminta `title` serta `description` dari *task* yang akan dibuat.
      Kemudian, akan dibuat object Task baru dari data yang diisi di form tadi. Implementasi create_task ini akan disimpan di target HTML `create-task.html`.
    - Akan dibuat *routing* untuk keempat *page* di atas dengan menambahkan URL di `url_patterns` pada `./todolist/urls.py`
+
+### Tugas 5
+1. - Inline CSS: Menuliskan *style* CSS di dalam tag HTML yang ingin dikustomisasi
+   - In(ternal)-file: *Style* CSS ditulis di dalam file yang sama dengan HTML dan dibungkus dengan *tag* `<style></style>`. 
+ Untuk mereferensikan jenis kustomisasi yang diinginkan, ditambahkan atribut *class="#"* di dalam tag HTML tersebut,
+ dengan `#` sebagai nama CSS selector yang sudah didefinisikan di dalam *in-file* CSS tadi
+   - External: *Style* CSS dituliskan di file terpisah yang memiliki ekstensi `.css` (misalnya, `styles.css`). 
+ File HTML akan mengambil referensi dari `style.css` tersebut dengan menuliskan `<link rel="stylesheet" href="styles.css">`
+
+2. - `<!DOCTYPE>`: Mendefinisikan tipe dokumen
+   - `<a>`: Membuat sebuah hyperlink
+   - `<head>`: Di dalam tag ini terdapat informasi metadata/informasi dokumen
+   - `<body>`: Di dalam tag ini terisi konten dari dokumen
+   - `<button>`: Membuat elemen tombol
+   - (dan masih banyak lagi.. :D)
+
+3. - `.class`: Mengambil semua elemen yang memiliki kelas `class="<nama_kelas>"`
+   - `element`: Mengambil semua elemen yang sesuai, misalnya `h1`
+
+4. - Kustomisasi halaman *login*, *register*, serta *create-task* menggunakan CSS sendiri dan *library* bootstrap
+   - Kustomisasi halaman *todolist* dengan membuat *cards* per objek *task* menggunakan CSS sendiri dan *library* bootstrap
+   - Elemen *class* dari *library* Bootstrap dikustomisasi (*override*) secara in-file dan in-line
