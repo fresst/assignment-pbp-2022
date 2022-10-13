@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.core import serializers
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from todolist.models import Task, CreateTaskForm
@@ -52,7 +53,7 @@ def show_todolist(req):
     context = {
         'name' : user_name,
         'tasks' : task,
-        'last_login' : req.COOKIES['login_cookie']
+        'last_login' : req.COOKIES['login_cookie'],
     }
     return render(req, 'todolist.html', context)
 
@@ -83,3 +84,22 @@ def delete_task(req, id):
     this_task = Task.objects.get(id=id)
     this_task.delete()
     return redirect('todolist:show_todolist')
+
+@login_required(login_url='/todolist/login')
+def get_todolist_json(req):
+    tasks = Task.objects.filter(user=req.user)
+    return HttpResponse(serializers.serialize("json", tasks), 
+                        content_type="application/json")
+
+def add_task(req):
+    form = CreateTaskForm()
+    if req.method == 'POST':
+        form = CreateTaskForm(req.POST)
+        if form.is_valid():
+            new_task = form.save(commit=False)
+            new_task.user = req.user
+            new_task.date = f"{datetime.datetime.now():%Y-%m-%d}"
+            new_task.save()
+            # messages.success(req, 'Task baru berhasil dibuat!')
+            return redirect('todolist:show_todolist')
+    return redirect('/todolist')

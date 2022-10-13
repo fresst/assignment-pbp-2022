@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% block meta %}
+{% endblock meta %}
+
 {% block content %}
   <style>
     a:link {
@@ -53,6 +56,90 @@
     }
   </style>
 
+  <script>
+    $(document).ready(function(){
+      $('.modal-dialog').hide();
+      $.get('/todolist/json', function(item){
+        ;
+        let content = ''
+        for(let i=0; i<item.length; i++) {
+          let task_status = item[i].fields.is_finished ? `Selesai` : `Belum Selesai`;
+          let icon = item[i].fields.is_finished
+                    ? `<i class="bi bi-check-square-fill"></i>`
+                    : `<i class="bi bi-dash-square"></i>`;  
+          content += `
+          <div class="column">
+            <div class="card bg-light mb-3" style="max-width: 20rem;">
+              <div class="card-header">
+                ${task_status}
+              </div>
+      
+              <div class="card-body">
+                <h5 class="card-title" style="text-align: center">${item[i].fields.title}</h5>
+                <p class="card-text" style="text-align: center">${item[i].fields.description}</p>
+                
+                <a class="btn" href="change-status/${id}/">${item[i].pk}</a>
+      
+                <a class="btn" href="delete-task/${item[i].pk}/">
+                  <i class="bi bi-trash-fill"></i>
+                </a>
+      
+              </div>
+            </div>
+          </div>`;
+          $('.row').html(content);
+        }
+      })
+    })
+
+    $(document).ready(function(){
+      $('.toggle-add-task').click(function(){
+        $('.modal-dialog').toggle();
+      })
+    })
+
+    $(document).ready(function(){
+      $('.add-task').click(function(){ 
+        $.post('/todolist/add/', {
+          title: $('#title').val(),
+          description: $('#description').val(),
+        }, function(){
+          $('.modal-dialog').hide();
+          $.get('/todolist/json', function(item){
+            ;
+            for(let i=0; i<item.length; i++) {
+              let task_status = item[i].fields.is_finished ? `Selesai` : `Belum Selesai`;
+              let icon = item[i].fields.is_finished
+                        ? `<i class="bi bi-check-square-fill"></i>`
+                        : `<i class="bi bi-dash-square"></i>`;  
+              content += `
+              <div class="column">
+                <div class="card bg-light mb-3" style="max-width: 20rem;">
+                  <div class="card-header">
+                    ${task_status}
+                  </div>
+          
+                  <div class="card-body">
+                    <h5 class="card-title" style="text-align: center">${item[i].fields.title}</h5>
+                    <p class="card-text" style="text-align: center">${item[i].fields.description}</p>
+                    
+                    <a class="btn" href="change-status/${id}/">${item[i].pk}</a>
+          
+                    <a class="btn" href="delete-task/${item[i].pk}/">
+                      <i class="bi bi-trash-fill"></i>
+                    </a>
+          
+                  </div>
+                </div>
+              </div>`;
+              $('.row').html(content);
+            }
+          })
+        })
+      })
+    })
+  </script>
+
   <nav class="navbar bg-light fixed-top">
     <div class="user-dropdown">
       <h3 class="dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,15 +159,19 @@
     <h1>Welcome back, {{user}}! </h1>
   </div>
 
-  {% comment %} create task {% endcomment %}
+  {% comment %} create task 
   <a class="btn" href="{% url 'todolist:create_task' %}" style="right:0;">
     <h4 class="bi bi-plus-square">
       Create a New Task
     </h4>
   </a>
+  {% endcomment %}
+
+  <button class="toggle-add-task bi bi-plus-square" href="{% url 'todolist:add_task' %}" style="right:0;">
+  </button>
   
-  {% comment %} Add the data below this line {% endcomment %}
   <div class="row">
+    {% comment %} 
     {% for task in tasks %}
     <div class="column">
       <div class="card bg-light mb-3" style="max-width: 20rem;">
@@ -107,7 +198,40 @@
       </div>
     </div>
     {% endfor %}
+    {% endcomment %}
   </div>
+  
+  <form method="POST" id="add-new-task" class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add a New Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" name="title" id="title" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea rows="10" cols="70" name="description" id="description" class="form-control" required></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div style="text-align:center">
+            <button class="btn btn-dark" type="submit" style="margin-top: 10px"> Create Task </button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </form>
+
 {% endblock content %}
 
 {% block footer%}
