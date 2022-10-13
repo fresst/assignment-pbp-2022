@@ -4,9 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from todolist.models import Task, CreateTaskForm
 
 # Create your views here.
@@ -75,11 +76,14 @@ def create_task(req):
     }
     return render(req, 'create-task.html', context)
 
+@csrf_exempt
 def change_status(req, id):
     this_task = Task.objects.get(id=id)
     this_task.change_status()
-    return redirect('todolist:show_todolist')
+    #return redirect('todolist:show_todolist')
+    return JsonResponse({"is_finished" : this_task.is_finished})
 
+@csrf_exempt
 def delete_task(req, id):
     this_task = Task.objects.get(id=id)
     this_task.delete()

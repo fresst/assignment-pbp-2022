@@ -60,82 +60,70 @@
     $(document).ready(function(){
       $('.modal-dialog').hide();
       $.get('/todolist/json', function(item){
-        ;
-        let content = ''
         for(let i=0; i<item.length; i++) {
-          let task_status = item[i].fields.is_finished ? `Selesai` : `Belum Selesai`;
-          let icon = item[i].fields.is_finished
-                    ? `<i class="bi bi-check-square-fill"></i>`
-                    : `<i class="bi bi-dash-square"></i>`;  
-          content += `
-          <div class="column">
-            <div class="card bg-light mb-3" style="max-width: 20rem;">
-              <div class="card-header">
+          makeCard(item[i]);
+          changeStatus(item[i]);
+          deleteTask(item[i]);
+        }
+      });
+
+      function makeCard(item){
+        let task_status = item.fields.is_finished ? `Selesai` : `Belum Selesai`;
+        let icon = item.fields.is_finished
+                  ? `<i class="bi bi-check-square-fill"></i>`
+                  : `<i class="bi bi-dash-square"></i>`; 
+        $(".row").append(
+          `\n<div class="column">
+            <div id="card-${item.pk}" class="card bg-light mb-3" style="max-width: 20rem;">
+              <div class="card-header" id="task-status-${item.pk}">
                 ${task_status}
               </div>
       
               <div class="card-body">
-                <h5 class="card-title" style="text-align: center">${item[i].fields.title}</h5>
-                <p class="card-text" style="text-align: center">${item[i].fields.description}</p>
+                <h5 class="card-title" style="text-align: center">${item.fields.title}</h5>
+                <p class="card-text" style="text-align: center">${item.fields.description}</p>
                 
-                <a class="btn" href="change-status/${id}/">${item[i].pk}</a>
+                <a class="btn" id="change-status-${item.pk}">${icon}</a>
       
-                <a class="btn" href="delete-task/${item[i].pk}/">
+                <a class="btn" id="delete-task-${item.pk}">
                   <i class="bi bi-trash-fill"></i>
                 </a>
       
               </div>
             </div>
-          </div>`;
-          $('.row').html(content);
-        }
-      })
-    })
+          </div>`
+        );
+      }
+  
+      function changeStatus(item){
+        $(`#change-status-${item.pk}`).click(function (){
+          $.post(`./change-status/${item.pk}/`, {}).done(
+            (res) => {
+              let taskStatus = res.is_finished ? `Selesai` : `Belum Selesai`;
+              let icon = res.is_finished
+                      ? `<i class="bi bi-check-square-fill"></i>`
+                      : `<i class="bi bi-dash-square"></i>`;
+              $(`#task-status-${item.pk}`).text(taskStatus);
+              $(`#change-status-${item.pk}`).html(icon);
+            }
+          );
+        });
+      }
+  
+      function deleteTask(item){
+        $(`#delete-task-${item.pk}`).click(function(){
+          $.post(`./delete-task/${item.pk}/`, {}).done(
+            (res) => {
+              $(`#card-${item.pk}`).fadeOut();
+            }
+          );
+        });
+      }
+    });
 
     $(document).ready(function(){
       $('.toggle-add-task').click(function(){
         $('.modal-dialog').toggle();
-      })
-    })
-
-    $(document).ready(function(){
-      $('.add-task').click(function(){ 
-        $.post('/todolist/add/', {
-          title: $('#title').val(),
-          description: $('#description').val(),
-        }, function(){
-          $('.modal-dialog').hide();
-          $.get('/todolist/json', function(item){
-            ;
-            for(let i=0; i<item.length; i++) {
-              let task_status = item[i].fields.is_finished ? `Selesai` : `Belum Selesai`;
-              let icon = item[i].fields.is_finished
-                        ? `<i class="bi bi-check-square-fill"></i>`
-                        : `<i class="bi bi-dash-square"></i>`;  
-              content += `
-              <div class="column">
-                <div class="card bg-light mb-3" style="max-width: 20rem;">
-                  <div class="card-header">
-                    ${task_status}
-                  </div>
-          
-                  <div class="card-body">
-                    <h5 class="card-title" style="text-align: center">${item[i].fields.title}</h5>
-                    <p class="card-text" style="text-align: center">${item[i].fields.description}</p>
-                    
-                    <a class="btn" href="change-status/${id}/">${item[i].pk}</a>
-          
-                    <a class="btn" href="delete-task/${item[i].pk}/">
-                      <i class="bi bi-trash-fill"></i>
-                    </a>
-          
-                  </div>
-                </div>
-              </div>`;
-              $('.row').html(content);
-            }
-          })
-        })
       })
     })
   </script>
