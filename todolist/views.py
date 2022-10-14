@@ -95,6 +95,7 @@ def get_todolist_json(req):
     return HttpResponse(serializers.serialize("json", tasks), 
                         content_type="application/json")
 
+@csrf_exempt
 def add_task(req):
     form = CreateTaskForm()
     if req.method == 'POST':
@@ -105,5 +106,12 @@ def add_task(req):
             new_task.date = f"{datetime.datetime.now():%Y-%m-%d}"
             new_task.save()
             # messages.success(req, 'Task baru berhasil dibuat!')
-            return redirect('todolist:show_todolist')
-    return redirect('/todolist')
+            return JsonResponse({
+                "pk" : new_task.pk,
+                "fields" : {
+                    "user" : new_task.user,
+                    "date" : new_task.date,
+                    "title": new_task.title,
+                    "description" : new_task.description
+                }
+            })

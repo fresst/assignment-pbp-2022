@@ -58,7 +58,6 @@
 
   <script>
     $(document).ready(function(){
-      $('.modal-dialog').hide();
       $.get('/todolist/json', function(item){
         for(let i=0; i<item.length; i++) {
           makeCard(item[i]);
@@ -119,13 +118,23 @@
           );
         });
       }
-    });
 
-    $(document).ready(function(){
-      $('.toggle-add-task').click(function(){
-        $('.modal-dialog').toggle();
-      })
-    })
+      $(`#task-creation`).submit(function(event){
+        event.preventDefault();
+        $.post("add/", {
+          title: $("#title").val(),
+          description: $("#description").val(),
+        }).done(function (item){
+          makeCard(item);
+          changeStatus(item);
+          deleteTask(item);
+
+          const row = document.getElementByClassName("row");
+          row.insertAdjacentHTML("beforestart", $(`#card-${data.pk}`));
+        });
+        $('#addTaskModal').modal('hide');
+      });
+    });
   </script>
 
   <nav class="navbar bg-light fixed-top">
@@ -154,10 +163,42 @@
     </h4>
   </a>
   {% endcomment %}
-
-  <button class="toggle-add-task bi bi-plus-square" href="{% url 'todolist:add_task' %}" style="right:0;">
-  </button>
   
+  <!-- Button trigger modal -->
+  <a type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addTaskModal"  style="right:0;">
+    <h2 class="bi bi-plus-square"></h2>
+  </a>
+  
+  <!-- Modal -->
+  <div class="modal" tabindex="-1" id="addTaskModal" style="position:fixed">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add a New Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" id="task-creation">  
+            {% csrf_token %}
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" id="title" class="form-control" required>
+              </div>
+      
+              <div class="form-group">
+                <label>Description</label>
+                <textarea rows="10" cols="70" name="description"  id="description" class="form-control" required></textarea>
+              </div>
+      
+              <div style="text-align:center">
+                <button class="btn btn-dark" type="submit" style="margin-top: 10px"> Create Task </button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     {% comment %} 
     {% for task in tasks %}
@@ -189,6 +230,7 @@
     {% endcomment %}
   </div>
   
+  {% comment %}
   <form method="POST" id="add-new-task" class="modal-dialog modal-dialog-centered">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -219,7 +261,7 @@
       </div>
     </div>
   </form>
-
+  {% endcomment %}
 {% endblock content %}
 
 {% block footer%}
